@@ -1,0 +1,15 @@
+:root {
+  --backgroud-color: #282c34;
+  --header-color: #e5e5e5;
+  --text-color: #f5f5f5;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--backgroud-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
