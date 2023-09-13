@@ -4,12 +4,29 @@
   --text-color: #f5f5f5;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   color: var(--text-color);
   background-color: var(--backgroud-color);
 }
 
-* {
-  margin: 0;
-  padding: 0;
+section {
+  padding: 10px;
+}
+
+.to-do-checkbox {
+  margin-right: 8px;
+}
+
+.to-do-checkbox:checked + label {
+  text-decoration: line-through;
+}
+
+.to-do-icon {
+  width: 16px;
+  margin-left: 8px;
 }
