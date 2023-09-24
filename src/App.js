@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -43,9 +44,19 @@ function ToDoList({toDoList}){
 }
 
 function AddToDoItem() {
+  const [newToDo, setNewToDo] = useState('')
+
+  const handleFieldChange = () => {
+
+  }
+
+  const handleAddToDo = () => {
+
+  }
+
   return (
     <>
-      <input type="text"></input>
+      <input onChange={handleFieldChange} type="text"></input>
       <button>Add new Item</button>
     </>
   )
