@@ -8,21 +8,58 @@ function MainApp() {
   return (
     <section>
       <h1>To-do list</h1>
-      <ToDoList toDoList={ToDos}/>
+      <ToDoList/>
     </section>
   );
 }
 
-const ToDos= [
-  {label: "To-do Item 1", id:"tdi1", checked:true},
-  {label: "To-do Item 2", id:"tdi2", checked:false},
-  {label: "To-do Item 3", id:"tdi3", checked:false}
-]
 
-function ToDoListItem({ toDoItem }) {
+// Display list compoent
+function ToDoList(){
+
+  const [toDos, setNewTodos] = useState([
+    {id:"tdi1", label: "To-do Item 1", checked:true},
+    {id:"tdi2", label: "To-do Item 2", checked:false},
+    {id:"tdi3", label: "To-do Item 3", checked:false}
+  ])
+
+  const handleToDoAddition = (toAdd) => {
+    toAdd.id = toAdd.label.toLowerCase();
+    toAdd.checked = false;
+    setNewTodos([...toDos, toAdd])
+  }
+
+  const handleCheck = (e) => {
+    if (e.checked){
+      console.log("Previous state: ",this)
+      e.checked = false 
+      console.log("Unchecked") 
+    }else{ 
+      console.log("Previous state: ",e)
+      e.checked = true; 
+      console.log("Checked")
+    } 
+    // toDoItem.checked ? toDoItem.checked = false console.log("Unchecked"): toDoItem.checked = true; console.log("Checked")
+  }
+
   return (
-    <li key={toDoItem.id}>
-      <input className="to-do-checkbox" type="checkbox" id={toDoItem.id} defaultChecked={toDoItem.checked}></input>
+    <>
+      <ul>
+        {toDos.map((item) => (
+          <ToDoListItem toDoItem={item} handleClick={handleCheck}/>
+        ))}
+      </ul>
+      <AddToDoItem setListItems={handleToDoAddition} />
+    </>
+  )
+}
+
+// Display list item component
+function ToDoListItem({ toDoItem, handleClick }) {
+
+  return (
+    <li key={toDoItem.label}>
+      <input className="to-do-checkbox" type="checkbox" id={toDoItem.id} defaultChecked={toDoItem.checked} onClick={handleClick}></input>
       <label htmlFor={toDoItem.id}>{toDoItem.label}</label>
       <img className="to-do-icon" src="./modify.png" alt="Modify Item"></img>
       <img className="to-do-icon" src="./delete.png" alt="Modify Item"></img>
@@ -30,34 +67,20 @@ function ToDoListItem({ toDoItem }) {
   )
 }
 
-function ToDoList({toDoList}){
-  return (
-    <>
-      <ul>
-        {toDoList.map((item) => (
-          <ToDoListItem toDoItem={item}/>
-        ))}
-      </ul>
-      <AddToDoItem/>
-    </>
-  )
-}
 
-function AddToDoItem() {
+// Add Item component
+function AddToDoItem({setListItems}) {
+
   const [newToDo, setNewToDo] = useState('')
 
-  const handleFieldChange = () => {
-
-  }
-
-  const handleAddToDo = () => {
-
+  const handleFieldChange = (e) => {
+    setNewToDo({label: e.target.value})
   }
 
   return (
     <>
       <input onChange={handleFieldChange} type="text"></input>
-      <button>Add new Item</button>
+      <button onClick={() => setListItems(newToDo) }>Add new Item</button>
     </>
   )
 }
