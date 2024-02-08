@@ -11,34 +11,51 @@ const TODOS = [
   {id: 4, label: "Finir de faire les choses", checked: false}
 ]
 
+const maxId = TODOS.reduce((maxValue, currentValue) => maxValue.id < currentValue.id ? currentValue : maxValue).id
+
 function App() {
 
-  const [addToDo, setAddToDo] = useState("")
+  const [toDoItem, setToDoItem] = useState('');
+  const [toDoList, setToDoList] = useState(TODOS);
+  const [toDoId, setToDoId] = useState(maxId);
 
-  const todos = [];
-  
-  for (let todo of TODOS) {
-    todos.push(<ToDo key={todo.id} id={todo.id} label={todo.label} checked={todo.checked} />)
+  const handleRemoveToDoClick = (id) => {
+    setToDoList(toDoList.filter((task) => task.id != id))
   }
 
+  const allTodos = toDoList.map((todo) => <ToDo key={todo.id} id={todo.id} label={todo.label} checked={todo.checked} handleRemoveToDoClick={handleRemoveToDoClick}/>)
+
   return <div>
-    {todos}
-    <AddToDoBar addToDo={addToDo} onAddToDo={setAddToDo} onAddToDoButtonClick={addToDo}/>
+    {allTodos}
+    <AddToDoBar toDoItem={toDoItem} setToDoItem={setToDoItem} toDoList={toDoList} setToDoList={setToDoList} toDoId={toDoId} setToDoId={setToDoId}/>
   </div>
     
 }
 
-function AddToDoBar({addToDo, onAddToDo}){
+function AddToDoBar({toDoItem, setToDoItem, toDoList, setToDoList, toDoId, setToDoId}){
+
+  const handleClick = () => {
+
+    if (toDoItem != '') {
+      let toAdd = {}
+
+      toAdd.label = toDoItem;
+      toAdd.id = toDoId+1;
+      toAdd.checked = false;
+
+      setToDoList([...toDoList, toAdd])
+      setToDoItem(toDoItem = '')
+      setToDoId((toDoId) => toDoId + 1)
+    }
+  }
+
   return <div>
     <Input id="add-to-do" 
       placeholder="Add a to-do" 
-      onChange={onAddToDo} 
-      value={addToDo}/>
-    <Button value={"Ajouter"} 
-      onClick={(e) => {
-        e.preventDefault()
-        console.log('The link was clicked.')
-      }}/>
+      onChange={setToDoItem} 
+      value={toDoItem}/>
+    <Button label={"Ajouter"} 
+      handleClick={handleClick}/>
   </div>
 }
 

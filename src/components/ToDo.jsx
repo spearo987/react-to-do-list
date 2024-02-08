@@ -2,8 +2,13 @@ import { useState } from "react"
 
 /**
  * 
+ * @param {integer} id 
+ * @param {string} label 
+ * @param {boolean} checked 
+ * @param {(id) => void} handleRemoveToDoClick 
+ * @returns 
  */
-export function ToDo ({id, label, checked}){
+export function ToDo ({id, label, checked, handleRemoveToDoClick}){
 
   const [done, setDone] = useState(checked)
 
@@ -15,6 +20,7 @@ export function ToDo ({id, label, checked}){
         checked={done} 
         onChange={(e) => setDone(e.target.checked)}/>
       <label htmlFor={id}>{label}</label>
+      <span onClick={() => handleRemoveToDoClick(id)}><img src="./delete.png" alt="Delete To Do" /></span>
     </div>
   )
 }
