@@ -1,5 +1,5 @@
-export function Button({label, handleClick}) {
-  return <button onClick={handleClick}> 
+export function Button({label, handleClick, disabled}) {
+  return <button onClick={handleClick} disabled={!disabled}> 
     {label}
   </button>
 }

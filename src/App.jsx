@@ -3,6 +3,7 @@ import './App.css'
 import { ToDo } from './components/ToDo'
 import { Input } from './components/Input';
 import { Button } from './components/Button';
+import { Checkbox } from './components/Checkbox';
 
 const TODOS = [
   {id: 1, label: "Finir la todo-list", checked: false},
@@ -18,16 +19,30 @@ function App() {
   const [toDoItem, setToDoItem] = useState('');
   const [toDoList, setToDoList] = useState(TODOS);
   const [toDoId, setToDoId] = useState(maxId);
+  const [displayOnlyNotDone, setDisplayOnlyNotDone] = useState(false);
 
   const handleRemoveToDoClick = (id) => {
     setToDoList(toDoList.filter((task) => task.id != id))
   }
 
-  const allTodos = toDoList.map((todo) => <ToDo key={todo.id} id={todo.id} label={todo.label} checked={todo.checked} handleRemoveToDoClick={handleRemoveToDoClick}/>)
+  const handleEditToDoClick = (id) => {
+    console.log("Edit the item n°", id);
+  }
+
+  const handleDisplayOnlyNotDone = () => {
+    setDisplayOnlyNotDone(!displayOnlyNotDone)
+    // setToDoList(toDoList.filter((task) => {
+    //   console.log("Task : ", task);
+    //   task.checked === true
+    // }))
+  }
+
+  const allTodos = toDoList.map((todo) => <ToDo key={todo.id} id={todo.id} label={todo.label} checked={todo.checked} handleRemoveToDoClick={handleRemoveToDoClick} handleEditToDoClick={handleEditToDoClick}/>)
 
   return <div>
     {allTodos}
     <AddToDoBar toDoItem={toDoItem} setToDoItem={setToDoItem} toDoList={toDoList} setToDoList={setToDoList} toDoId={toDoId} setToDoId={setToDoId}/>
+    <Checkbox checked={displayOnlyNotDone} onChange={handleDisplayOnlyNotDone} label="Montrer les tâches non terminées" id="unfinished-task" />
   </div>
     
 }
@@ -55,7 +70,8 @@ function AddToDoBar({toDoItem, setToDoItem, toDoList, setToDoList, toDoId, setTo
       onChange={setToDoItem} 
       value={toDoItem}/>
     <Button label={"Ajouter"} 
-      handleClick={handleClick}/>
+      handleClick={handleClick}
+      disabled={toDoItem}/>
   </div>
 }
 
