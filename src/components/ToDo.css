@@ -1,0 +1,24 @@
+.to-do-item {
+  display: grid;
+  grid-template-columns: 32px 1fr 24px 24px;
+  column-gap: 10px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.to-do-item label {
+  text-align: left;
+}
+
+.to-do-item input[type="checkbox"]{
+  width: 100%;
+  margin: 0;
+}
+
+.to-do-item span {
+  display: flex;
+}
+
+.to-do-item span img {
+  width: 100%;
+}

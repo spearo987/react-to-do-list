@@ -1,4 +1,5 @@
 import { useState } from "react"
+import './ToDo.css'
 
 /**
  * 
@@ -13,7 +14,7 @@ export function ToDo ({id, label, checked, handleRemoveToDoClick, handleEditToDo
   const [done, setDone] = useState(checked)
 
   return (
-    <div>
+    <div className="to-do-item">
       <input type="checkbox" 
         id={id} 
         key={id} 
